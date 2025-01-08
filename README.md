@@ -10,6 +10,7 @@ Based on [https://github.com/themesberg/flowbite-svelte-admin-dashboard.git](htt
 - Based on flowbite-svelte
 - Easily customizable
 - Desktop and Mobile support
+- Light and Dark mode
 
 ## Usage
 
