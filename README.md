@@ -9,3 +9,10 @@ Based on [https://github.com/themesberg/flowbite-svelte-admin-dashboard.git](htt
 - Component based Navbar and Sidebar
 - Based on flowbite-svelte
 - Easily customizable
+- Desktop and Mobile support
+
+## Usage
+
+1. Clone the repo
+2. npm ci
+3. npm run dev or npx vite --host <local IP> (to test it on mobile)
