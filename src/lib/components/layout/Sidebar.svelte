@@ -111,7 +111,7 @@
 	>
 		<nav class="divide-y divide-gray-200 dark:divide-gray-700">
 			<SidebarGroup ulClass={groupClass} class="mb-3">
-				{#each posts as { name, icon, children, href, badge } (name)}
+				{#each posts as { name, icon, children, href } (name)}
 					{#if children}
 						<SidebarDropdownWrapper bind:isOpen={dropdowns[name]} label={name} class="pr-3">
 							<AngleDownOutline slot="arrowdown" strokeWidth="3.3" size="sm" />
@@ -135,7 +135,6 @@
 							class={itemClass}
 						>
 							<svelte:component this={icon} slot="icon" class={iconClass} />
-							<Badge {...badge} slot="subtext" />
 						</SidebarItem>
 					{/if}
 				{/each}
