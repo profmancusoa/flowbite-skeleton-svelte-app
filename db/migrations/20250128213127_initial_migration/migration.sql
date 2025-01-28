@@ -12,12 +12,11 @@ CREATE TABLE "User" (
 CREATE TABLE "Session" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "sessionId" TEXT NOT NULL,
-    "userId" INTEGER NOT NULL,
-    "expiresAt" INTEGER NOT NULL,
     "token" TEXT NOT NULL,
-    "isMobile" BOOLEAN NOT NULL DEFAULT false,
+    "expiresAt" DATETIME NOT NULL,
+    "picture" TEXT NOT NULL,
+    "userId" INTEGER NOT NULL,
     CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -25,7 +24,7 @@ CREATE TABLE "Session" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Session_userId_key" ON "Session"("userId");
+CREATE UNIQUE INDEX "Session_token_key" ON "Session"("token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Session_token_key" ON "Session"("token");
+CREATE UNIQUE INDEX "Session_userId_key" ON "Session"("userId");

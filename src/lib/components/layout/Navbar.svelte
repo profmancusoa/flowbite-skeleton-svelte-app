@@ -1,5 +1,4 @@
 <script lang="ts">
-	import UserMenu from './UserMenu.svelte';
 	import {
 		DarkMode,
 		NavBrand,
@@ -7,22 +6,15 @@
 		Navbar,
 		Search
 	} from 'flowbite-svelte';
-	import '../../../app.pcss';
-	export let drawerHidden = false;
-	export let searchBar  = true;
+	import UserMenu from './UserMenu.svelte';
+	import { showDrawer } from '$lib/ts/store.svelte';
 
-	let user = {
-		"id": 5,
-		"name": "John Doen",
-		"avatar": "/images/avatar.webp",
-		"email": "johnd@email.com",
-		"status": "Offline"
-	};
+	const { searchBar = $bindable() } = $props();
 </script>
 
 <Navbar fluid class="text-black" color="default" let:NavContainer>
 	<NavHamburger
-		onClick={() => (drawerHidden = !drawerHidden)}
+		onClick={() => showDrawer.value = !showDrawer.value}
 		class="m-0 me-3 md:block lg:hidden"
 	/>
 	<NavBrand href="/" class="lg:w-60">
@@ -45,7 +37,7 @@
 		</div>
 	{/if}
 	<div class="ms-auto flex items-center text-gray-500 dark:text-gray-400 sm:order-2">
-		<DarkMode />
-		<UserMenu {...user} />
+		<DarkMode />	
+		<UserMenu/>
 	</div>
 </Navbar>

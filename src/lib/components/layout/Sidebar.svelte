@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
-
+	import { page } from '$app/state';
+	import { showDrawer } from '$lib/ts/store.svelte';
 	import {
 		Sidebar,
 		SidebarDropdownWrapper,
@@ -22,24 +22,17 @@
 		BugSolid
 	} from 'flowbite-svelte-icons';
 
-	import Badge from './Badge.svelte';
-
-	export let drawerHidden: boolean = false;
-
-	const closeDrawer = () => {
-		drawerHidden = true;
-	};
-
 	let iconClass =
 		'flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white';
-	// let itemClass =
-	// 	'flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700';
 	let itemClass =
 		'flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700';
 	let groupClass = 'pt-2 space-y-2';
 
-	$: mainSidebarUrl = $page.url.pathname;
 	let activeMainSidebar: string;
+
+	const closeDrawer = () => {
+		showDrawer.value = true;
+	};
 
 	afterNavigate((navigation) => {
 		// this fixes https://github.com/themesberg/flowbite-svelte/issues/364
@@ -50,32 +43,32 @@
 	});
 
 	let posts = [
-		{ name: 'Menu 1', icon: EnvelopeOpenSolid, href: '/pageMenu1'  },
+		{ name: 'Menu 1', icon: EnvelopeOpenSolid, href: '/menu1'  },
 		{ 
 			name: 'Menu 2', 
 			icon: RocketSolid, 
-			href: '/pageMenu2',  
+			href: '/menu2',  
 		},
 		{
 			name: 'Menu 3',
 			icon: GiftBoxSolid,
 			children: {
-				"Submenu-3-1": '/pageMenu3-1',
-				"Submenu-3-2": '/pageMenu3-2'
+				"Submenu-3-1": '/menu3-1',
+				"Submenu-3-2": '/menu3-2'
 			}
 		},
 		{
 			name: 'Menu 4',
 			icon: GridSolid,
 			children: {
-				"Submenu-4-1": '/pageMenu4-1',
-				"Submenu-4-2": '/pageMenu4-2'
+				"Submenu-4-1": '/menu4-1',
+				"Submenu-4-2": '/menu4-2'
 			}
 		},
 		{ 
 			name: 'Menu 5', 
 			icon: BugSolid, 
-			href: '/settings',
+			href: '/menu5',
 		}
 	];
 
@@ -100,8 +93,8 @@
 </script>
 
 <Sidebar
-	class={drawerHidden ? 'hidden' : ''}
-	activeUrl={mainSidebarUrl}
+	class={showDrawer.value ? 'hidden' : ''}
+	activeUrl={page.url.pathname}
 	activeClass="bg-gray-100 dark:bg-gray-700"
 	asideClass="fixed inset-0 z-30 flex-none h-full w-64 lg:h-auto border-e border-gray-200 dark:border-gray-600 lg:overflow-y-visible lg:pt-16 lg:block"
 >
@@ -157,7 +150,7 @@
 </Sidebar>
 
 <div
-	hidden={drawerHidden}
+	hidden={showDrawer.value}
 	class="fixed inset-0 z-20 bg-gray-900/50 dark:bg-gray-900/60"
 	on:click={closeDrawer}
 	on:keydown={closeDrawer}
